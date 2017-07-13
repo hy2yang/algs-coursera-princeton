@@ -1,4 +1,4 @@
-package algs4;
+package bookcodes;
 
 import edu.princeton.cs.algs4.StdDraw;
 
