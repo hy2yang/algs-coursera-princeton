@@ -56,7 +56,7 @@ public class Percolation {
 	{
 		validate(row);
 		validate(col);
-		int i=(row-1)*s+col-1;
+		int i=(row-1)*s+col;
 		
 		if (grid[i]==0)
 		{
@@ -84,12 +84,12 @@ public class Percolation {
 				a.union(i,i+1);
 			}
 			
-			if(i>s & grid[i-s]==1)  //not top
+			if((i>s) && grid[i-s]==1)  //not top
 			{
 				a.union(i,i-s);
 			}
 			
-			if((i<=s*s-s) & grid[i+s]==1)  //not bottom
+			if((i<=s*s-s) && grid[i+s]==1)  //not bottom
 			{
 				a.union(i,i+s);
 			}
