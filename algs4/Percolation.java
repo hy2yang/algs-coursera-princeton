@@ -44,7 +44,7 @@ public class Percolation {
 		validate(row);
 		validate(col);
 		int i=(row-1)*s+col;
-		return (a.find(i)==0);
+		return (a.connected(i,0));
 	}
 	
 	public int numberOfOpenSites()
