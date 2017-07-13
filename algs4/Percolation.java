@@ -11,7 +11,7 @@ public class Percolation {
 	private int[] grid;
 	private int opensites;
 	private int s;
-	private WeightedQuickUnionUF a;
+	private WeightedQuickUnionUF a,b;
 	
 	public Percolation(int n)   // create n-by-n grid, with all sites blocked
 	{  
@@ -20,6 +20,7 @@ public class Percolation {
         }
 		s=n;
 		a=new WeightedQuickUnionUF(s*s+2);  // s*s+2 sites, index from 0 to s*s+1
+		b=new WeightedQuickUnionUF(s*s+1);  // no bottom dummy
 		opensites=0;
 		grid= new int[s*s+2];  // 0=top dummy, s*s+1=bottom dummy, grid index 1~s*s
 		
@@ -44,7 +45,7 @@ public class Percolation {
 		validate(row);
 		validate(col);
 		int i=(row-1)*s+col;
-		return (a.connected(i,0));
+		return (b.connected(i,0));
 	}
 	
 	public int numberOfOpenSites()
@@ -66,7 +67,7 @@ public class Percolation {
 			if (i>0&i<=s) //top row
 			{
 				a.union(i,0);
-				
+				b.union(i,0);
 			}
 			
 			if (i>s*s-s) //bottom row
@@ -77,21 +78,25 @@ public class Percolation {
 			if((i%s!=1) & grid[i-1]==1)  //not left col
 			{
 				a.union(i,i-1);
+				b.union(i,i-1);
 			}
 			
 			if((i%s!=0) & grid[i+1]==1) //not right col
 			{
 				a.union(i,i+1);
+				b.union(i,i+1);
 			}
 			
 			if((i>s) && grid[i-s]==1)  //not top
 			{
 				a.union(i,i-s);
+				b.union(i,i-s);
 			}
 			
 			if((i<=s*s-s) && grid[i+s]==1)  //not bottom
 			{
 				a.union(i,i+s);
+				b.union(i,i+s);
 			}
 		}
 		
