@@ -5,6 +5,7 @@ public class PercolationStats {
 
 	private int n,T;
 	private double[] x;
+	private double mean,stddev;
 	
 	public PercolationStats(int a, int trials)
 	{
@@ -30,30 +31,34 @@ public class PercolationStats {
 			}
 			x[i]=((double)perc.numberOfOpenSites()/(n*n));
 		}
+		
+		mean=StdStats.mean(x);
+		stddev=StdStats.stddev(x);
 	}
 	
 	public double mean()
 	{
-	    return StdStats.mean(x);
+	    
+		return mean;
 	}
 	
 	public double stddev()
 	{
 		if(T==1)
 		{return Double.NaN;}
-		return StdStats.stddev(x);
+		return stddev;
 	}
 	
 	public double confidenceLo()
 	{
 		
-		return (StdStats.mean(x)-1.96*StdStats.stddev(x)/Math.sqrt(T));
+		return (mean-1.96*stddev/Math.sqrt(T));
 	}
 	
 	public double confidenceHi()
     {
 		
-		return (StdStats.mean(x)+1.96*StdStats.stddev(x)/Math.sqrt(T));
+		return (mean+1.96*stddev/Math.sqrt(T));
 	}
 	
 	public static void main(String[] args)
@@ -63,8 +68,8 @@ public class PercolationStats {
 		PercolationStats sample = new PercolationStats(a, trials);
 		double lo=sample.confidenceLo();
 		double hi=sample.confidenceHi();
-		StdOut.printf("%-23s = %.15f\n","mean",sample.mean());
-		StdOut.printf("%-23s = %.15f\n","stddev",sample.stddev());
+		StdOut.printf("%-23s = %.15f\n","mean", sample.mean);
+		StdOut.printf("%-23s = %.15f\n","stddev",sample.stddev);
 		StdOut.printf("%-23s = [%.15f,%.15f]\n","95% confidence interval",lo,hi);
 	}
 	
