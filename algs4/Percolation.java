@@ -4,7 +4,6 @@ public class Percolation {
 
 	public static void main(String[] args)  // TODO Auto-generated method stub
 	{
-		
 	}
 	
 	
@@ -27,7 +26,7 @@ public class Percolation {
 	}
 	
 	private void validate(int p) {
-        if (p <= 0 || p > s) {
+        if (p <1 || p > s) {
             throw new IllegalArgumentException("index " + p + " is not between 1 and " + s);  
         }
     }
