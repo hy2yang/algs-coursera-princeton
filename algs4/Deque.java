@@ -21,7 +21,7 @@ public class Deque<Item> implements Iterable<Item>{
     
     public Deque(){
         dequesize = 0;
-        last = first = new Node();
+        last = first = null;
         
     }
     
@@ -30,10 +30,10 @@ public class Deque<Item> implements Iterable<Item>{
         Node oldfirst = first;
         first = new Node();
         first.item = item;
-        first.next = oldfirst;
-        oldfirst.previous=first;
+        first.next = oldfirst;        
         dequesize++;
-        if (dequesize == 1) last = first;        
+        if (dequesize == 1) last = first;
+        else oldfirst.previous=first;
     }
 
     public void addLast(Item item){
@@ -41,16 +41,18 @@ public class Deque<Item> implements Iterable<Item>{
         Node oldlast = last;
         last = new Node();
         last.item = item;
-        last.previous = oldlast;
-        oldlast.next=last;
+        last.previous = oldlast;        
         dequesize++;
-        if (dequesize == 1) first = last;        
+        if (dequesize == 1) first = last; 
+        else oldlast.next=last;
     }
     
     public Item removeFirst(){
         if (isEmpty()) throw new NoSuchElementException("Stack underflow");
         Item item = first.item;        
-        first = first.next;           
+        first = first.next;        
+        if (dequesize == 1) last=null;
+        else first.previous=null;
         dequesize--;        
         return item;
     }
@@ -58,7 +60,9 @@ public class Deque<Item> implements Iterable<Item>{
     public Item removeLast(){
         if (isEmpty()) throw new NoSuchElementException("Stack underflow");
         Item item = last.item;        
-        last = last.previous;           
+        last = last.previous;        
+        if (dequesize == 1) first=null;
+        else last.next=null;
         dequesize--;        
         return item;
     }
@@ -83,20 +87,7 @@ public class Deque<Item> implements Iterable<Item>{
     
     public static void main(String[] args)
     {
-        /*Deque<Integer> s= new Deque<Integer>();        
-        for(int i=0; i<21;i++)
-        {
-            s.addLast(i);
-        }
-        for (int i:s){
-            StdOut.print(i);
-        }
-        
-        for(int j=0; j<21;j++)
-        {
-            StdOut.print(s.removeLast()+" ");
-        } */
-        
+              
     }
 
 }

@@ -37,8 +37,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         int x = StdRandom.uniform(n);        
         Item item=a[x];
         a[x]=a[n-1];
-        a[n-1] = null;                              
-        n--;
+        a[--n] = null;
         if (n > 0 && n == a.length/4) resize(a.length/2);
         return item;
     }
@@ -59,16 +58,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         private int i;   
         private Item[] temp;
         public RandomizedQueueIterator() {
-            i=0;
             temp = (Item[]) new Object[n];
-            for (int i = 0; i < n; i++) {
+            for (i = 0; i < n; i++) {
                 temp[i] = a[i];
             }
-            StdRandom.shuffle(temp,0,n);
+            StdRandom.shuffle(temp);
+            i=0;
         }
 
         public boolean hasNext() {
-            return (i < n-1);
+            return (i < n);
         }
 
         public void remove() {
@@ -82,20 +81,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     public static void main(String[] args) {
-        /*RandomizedQueue<Integer> s= new RandomizedQueue<Integer>();        
-        for(int i=0; i<21;i++)
-        {
-            s.enqueue(i);
-        }
         
-        for(int j=0; j<21;j++)
-        {
-            StdOut.print(s.dequeue()+" ");
         }
-        for (int i:s){
-           StdOut.print(i+" ");
-        }*/
-
-    }
 
 }
