@@ -5,3 +5,7 @@
 /Deque$ListIterator.class
 /Deque$node.class
 /Deque$Node.class
+/Deque$DequeIterator.class
+/RandomizedQueue.class
+/RandomizedQueue$RandomizedQueueIterator.class
+/Permutation.class
