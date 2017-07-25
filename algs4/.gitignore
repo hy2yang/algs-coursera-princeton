@@ -9,3 +9,7 @@
 /RandomizedQueue.class
 /RandomizedQueue$RandomizedQueueIterator.class
 /Permutation.class
+/LineSegment.class
+/Point.class
+/Point$slopeOrder.class
+/BruteCollinearPoints.class
