@@ -3,6 +3,8 @@ import edu.princeton.cs.algs4.StdDraw;
 
 public class Point implements Comparable<Point> {
 
+    public final Comparator<Point> SLOPE_ORDER = new slopeOrder();
+    
     private final int x;     // x-coordinate of this point
     private final int y;     // y-coordinate of this point
 
