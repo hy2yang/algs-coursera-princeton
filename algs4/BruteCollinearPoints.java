@@ -1,19 +1,23 @@
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class BruteCollinearPoints {
     
     private int n=0;
     private LineSegment[] a;
+    private ArrayList<LineSegment> foundsegments = new ArrayList<LineSegment>();
     
     public BruteCollinearPoints(Point[] points){
-        if (points == null) throw new java.lang.IllegalArgumentException("null list of points");
+        if (points == null) throw new java.lang.IllegalArgumentException("null list of points");        
+        for(int i=0;i<points.length;i++){
+            if (points[i] == null) throw new java.lang.IllegalArgumentException("null point at"+i);
+            for(int j=i+1;j<points.length;j++){
+                if ( points[i].compareTo(points[j])==0) throw new java.lang.IllegalArgumentException("repeated points");  
+            }            
+        }
         Point[] clone = points.clone();
         Arrays.sort(clone);
-        for(int i=0;i<clone.length;i++){
-            if (clone[i] == null) throw new java.lang.IllegalArgumentException("null point at"+i);
-            if (i>0 && clone[i] == clone[i-1]) throw new java.lang.IllegalArgumentException("repeated points");
-        }
-        
+                
         double s1,s2,s3;
         
         for(int p=0;p<clone.length-3;p++){
@@ -25,20 +29,25 @@ public class BruteCollinearPoints {
                         for(int s=r+1;s<clone.length;s++){
                             s3=clone[p].slopeTo(clone[s]);
                             if (s1==s2 && s2==s3){
-                                a[n++]=new LineSegment(clone[p],clone[s]);
+                                foundsegments.add(new LineSegment(clone[p],clone[s]));
+                                n++;
                             }
                         }
                     }
                 }
             }
-        }
+        }              
     }
     
     public int numberOfSegments(){
         return n;
     }
     
-    public LineSegment[] segments(){
+    public LineSegment[] segments(){   
+        a = new LineSegment[n];
+        for (int i=0;i<n;i++){
+            a[i]=foundsegments.get(i);
+        }  
         return a;
     }
     

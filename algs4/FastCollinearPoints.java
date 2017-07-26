@@ -1,26 +1,36 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FastCollinearPoints {
     private int n=0;
     private LineSegment[] a;
+    private ArrayList<LineSegment> foundsegments = new ArrayList<LineSegment>();
         
     public FastCollinearPoints(Point[] points){
-        if (points == null) throw new java.lang.IllegalArgumentException("null list of points");
+        if (points == null) throw new java.lang.IllegalArgumentException("null list of points");        
+        for(int i=0;i<points.length;i++){
+            if (points[i] == null) throw new java.lang.IllegalArgumentException("null point at"+i);
+            for(int j=i+1;j<points.length;j++){
+                if ( points[i].compareTo(points[j])==0) throw new java.lang.IllegalArgumentException("repeated points");  
+            }            
+        }
         Point[] clone = points.clone();
         Arrays.sort(clone);
-        for(int i=0;i<clone.length;i++){
-            if (clone[i] == null) throw new java.lang.IllegalArgumentException("null point at"+i);
-            if (i>0 && clone[i] == clone[i-1]) throw new java.lang.IllegalArgumentException("repeated points");
-        }
         
-        for(int p=0;p<clone.length-3;p++){
-            //double[] slopes=new double[points.length-1-p];
-            //int i=0;
-            for(int q=p+1;q<clone.length;q++){
-                //slopes[i++]=points[p].slopeTo(points[q]);
-                Arrays.sort(clone,clone[p].SLOPE_ORDER);
+        for(int p=0;p<clone.length-3;p++){            
+            Arrays.sort(clone,points[p].slopeOrder());            
+            for(int q=1;q<clone.length-2;){  
+                int i = 1;
+                while ( q+i<clone.length && clone[p].slopeTo(clone[q]) == clone[p].slopeTo(clone[q+i]) ){
+                    i++;
+                }
+                if (i>2) {
+                    foundsegments.add(new LineSegment(clone[p],clone[q+i-1])); 
+                    n++;
+                }
+                q+=i;
             }
-        }
+        }        
     }
     
     public int numberOfSegments(){
@@ -28,6 +38,10 @@ public class FastCollinearPoints {
     }
     
     public LineSegment[] segments(){
+        a = new LineSegment[n];
+        for (int i=0;i<n;i++){
+            a[i]=foundsegments.get(i);
+        }  
         return a;
     }
     
@@ -52,7 +66,7 @@ public class FastCollinearPoints {
         StdDraw.show();
 
         // print and draw the line segments
-        BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+        FastCollinearPoints collinear = new FastCollinearPoints(points);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();

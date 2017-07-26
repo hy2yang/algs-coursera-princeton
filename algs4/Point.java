@@ -2,8 +2,6 @@ import java.util.Comparator;
 import edu.princeton.cs.algs4.StdDraw;
 
 public class Point implements Comparable<Point> {
-
-    public final Comparator<Point> SLOPE_ORDER = new slopeOrder();
     
     private final int x;     // x-coordinate of this point
     private final int y;     // y-coordinate of this point
@@ -82,13 +80,20 @@ public class Point implements Comparable<Point> {
      *
      * @return the Comparator that defines this ordering on points
      */
-    public class slopeOrder implements Comparator<Point>  {
+    private class slopeOrder implements Comparator<Point>  {
         /* YOUR CODE HERE */        
         public int compare(Point a, Point b)
         {
             return Double.compare(slopeTo(a), slopeTo(b));
         }
     }
+    
+    public Comparator<Point> slopeOrder(){
+        return new slopeOrder(); 
+    }
+        
+    
+
 
 
     /**
