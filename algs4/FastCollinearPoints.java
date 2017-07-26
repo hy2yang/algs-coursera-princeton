@@ -6,19 +6,19 @@ public class FastCollinearPoints {
         
     public FastCollinearPoints(Point[] points){
         if (points == null) throw new java.lang.IllegalArgumentException("null list of points");
-        //Point[] clone = points.clone();
-        Arrays.sort(points);
-        for(int i=0;i<points.length;i++){
-            if (points[i] == null) throw new java.lang.IllegalArgumentException("null point at"+i);
-            if (i>0 && points[i] == points[i-1]) throw new java.lang.IllegalArgumentException("repeated points");
+        Point[] clone = points.clone();
+        Arrays.sort(clone);
+        for(int i=0;i<clone.length;i++){
+            if (clone[i] == null) throw new java.lang.IllegalArgumentException("null point at"+i);
+            if (i>0 && clone[i] == clone[i-1]) throw new java.lang.IllegalArgumentException("repeated points");
         }
         
-        for(int p=0;p<points.length-3;p++){
+        for(int p=0;p<clone.length-3;p++){
             //double[] slopes=new double[points.length-1-p];
             //int i=0;
-            for(int q=p+1;q<points.length;q++){
+            for(int q=p+1;q<clone.length;q++){
                 //slopes[i++]=points[p].slopeTo(points[q]);
-                Arrays.sort(points,points[p].SLOPE_ORDER);
+                Arrays.sort(clone,clone[p].SLOPE_ORDER);
             }
         }
     }

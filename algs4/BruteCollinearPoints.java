@@ -7,24 +7,25 @@ public class BruteCollinearPoints {
     
     public BruteCollinearPoints(Point[] points){
         if (points == null) throw new java.lang.IllegalArgumentException("null list of points");
-        Arrays.sort(points);
-        for(int i=0;i<points.length;i++){
-            if (points[i] == null) throw new java.lang.IllegalArgumentException("null point at"+i);
-            if (i>0 && points[i] == points[i-1]) throw new java.lang.IllegalArgumentException("repeated points");
+        Point[] clone = points.clone();
+        Arrays.sort(clone);
+        for(int i=0;i<clone.length;i++){
+            if (clone[i] == null) throw new java.lang.IllegalArgumentException("null point at"+i);
+            if (i>0 && clone[i] == clone[i-1]) throw new java.lang.IllegalArgumentException("repeated points");
         }
         
         double s1,s2,s3;
         
-        for(int p=0;p<points.length-3;p++){
-            for(int q=p+1;q<points.length-2;q++){
-                s1=points[p].slopeTo(points[q]);
-                for(int r=q+1;r<points.length-1;r++){
-                    s2=points[p].slopeTo(points[r]);
+        for(int p=0;p<clone.length-3;p++){
+            for(int q=p+1;q<clone.length-2;q++){
+                s1=clone[p].slopeTo(clone[q]);
+                for(int r=q+1;r<clone.length-1;r++){
+                    s2=clone[p].slopeTo(clone[r]);
                     if (s1==s2){
-                        for(int s=r+1;s<points.length;s++){
-                            s3=points[p].slopeTo(points[s]);
+                        for(int s=r+1;s<clone.length;s++){
+                            s3=clone[p].slopeTo(clone[s]);
                             if (s1==s2 && s2==s3){
-                                a[n++]=new LineSegment(points[p],points[s]);
+                                a[n++]=new LineSegment(clone[p],clone[s]);
                             }
                         }
                     }
