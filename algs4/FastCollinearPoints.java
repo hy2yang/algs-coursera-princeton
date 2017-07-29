@@ -13,26 +13,41 @@ public class FastCollinearPoints {
             for(int j=i+1;j<points.length;j++){
                 if ( points[i].compareTo(points[j])==0) throw new java.lang.IllegalArgumentException("repeated points");  
             }            
-        }
+        }                        
+               
         Point[] clone = points.clone();
-        Arrays.sort(clone);
         
-        for(int p=0;p<clone.length-3;p++){            
-            Arrays.sort(clone,points[p].slopeOrder());            
-            for(int q=1;q<clone.length-2;){  
-                int i = 1;
-                while ( q+i<clone.length && clone[p].slopeTo(clone[q]) == clone[p].slopeTo(clone[q+i]) ){
+        for(int p=0;p<points.length-3;p++){             
+            Arrays.sort(clone);
+            Arrays.sort(clone,clone[p].slopeOrder());  
+                       
+            for(int q=1, i=2;i<clone.length;i++){                 
+                                                
+                Point min=clone[q];
+                Point max=clone[q];
+                                
+                while ( i<clone.length && clone[0].slopeTo(clone[q]) == clone[0].slopeTo(clone[i]) ){
+                    if(clone[i].compareTo(max)>0) max=clone[i];
+                    if(clone[i].compareTo(min)<0) min=clone[i];
                     i++;
                 }
-                if (i>2) {
-                    foundsegments.add(new LineSegment(clone[p],clone[q+i-1])); 
-                    n++;
+                
+                if(min.compareTo(clone[0])<=0){
+                    q=i;
+                    continue;
                 }
-                q+=i;
+                
+                
+                if (i-q>2) {                                       
+                    foundsegments.add(new LineSegment(clone[0],max));
+                    n++;                    
+                }
+                q=i;
             }
-        }        
-    }
-    
+        } 
+          
+} 
+                  
     public int numberOfSegments(){
         return n;
     }
