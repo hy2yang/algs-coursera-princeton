@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.Stack;
 
 public class Board {
     
@@ -68,7 +69,47 @@ public class Board {
     
     public Iterable<Board> neighbors(){
         int t[][]=this.to2Dint();
+        int pos=-1;
+        Stack<Board> nstack = new Stack<Board>();
         
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if (board[n*i+j]=='0'){
+                    pos=n*i+j;
+                    break;
+                }
+            }
+        }
+        
+        if (pos/n>0){
+            exchange(t,pos,pos-n);
+            Board up= new Board(t);
+            nstack.push(up);
+            t=this.to2Dint();
+        }
+            
+        if (pos/n<n-1){
+            exchange(t,pos,pos+n);
+            Board down= new Board(t);
+            nstack.push(down);
+            t=this.to2Dint();
+        }
+        
+        if (pos%n>0){
+            exchange(t,pos,pos-1);
+            Board left= new Board(t);
+            nstack.push(left);
+            t=this.to2Dint();
+        }
+        
+        if (pos%n<n-1){
+            exchange(t,pos,pos+1);
+            Board right= new Board(t);
+            nstack.push(right);
+            t=this.to2Dint();
+        }
+        
+        return nstack;
     }
     
     private void exchange(int[][] x, int a, int b){
@@ -124,6 +165,9 @@ public class Board {
         StdOut.println(x.hamming());
         StdOut.println(x.manhattan());
         StdOut.print(x.twin().toString());
+        for (Board i :x.neighbors()){
+            StdOut.print(i.toString());
+        }
 
     }
 
