@@ -10,9 +10,10 @@ public class Board {
         board= new char[n*n];
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                board[n*i+j]= (char)(blocks[i][j]+48) ;
+                board[n*i+j]= (char)(blocks[i][j]) ;
             }
         }
+        
     }
     
     public int dimension(){
@@ -23,8 +24,8 @@ public class Board {
         int h=0;
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                if (board[n*i+j]=='0') continue;
-                if (board[n*i+j]!=(char)(n*i+j+49)) h++;
+                if ((int)board[n*i+j]==0) continue;
+                if ((int)board[n*i+j]!=(n*i+j+1)) h++;
             }
         }
         return h;
@@ -34,9 +35,9 @@ public class Board {
         int m=0;
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                if (board[n*i+j]=='0') continue;
-                if (board[n*i+j]!=(char)(n*i+j+49)){                    
-                    m+=Math.abs(i-(board[n*i+j]-49)/n)+Math.abs(j-(board[n*i+j]-49)%n);
+                if ((int)board[n*i+j]==0) continue;
+                if ((int)board[n*i+j]!=(n*i+j+1)){                    
+                    m+=Math.abs(i-((int)board[n*i+j]-1)/n)+Math.abs(j-((int)board[n*i+j]-1)%n);
                 }
             }
         }
@@ -74,7 +75,7 @@ public class Board {
         
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                if (board[n*i+j]=='0'){
+                if ((int)board[n*i+j]==0){
                     pos=n*i+j;
                     break;
                 }
@@ -122,7 +123,7 @@ public class Board {
         int t[][]=new int[n][n];
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                t[i][j]=board[n*i+j]-48;
+                t[i][j]=(int)board[n*i+j];
             }
         }
         return t;
@@ -130,7 +131,7 @@ public class Board {
      
     
     public boolean equals(Object y){
-        if (y==null || y==this){
+        if (y==null){
             return false;
         }            
         if (y.getClass()!=this.getClass()){
@@ -139,8 +140,10 @@ public class Board {
         if (((Board) y).dimension()!=this.dimension()){
             return false;
         }
-        if(((Board) y).toString()!=this.toString()){
-            return false;
+        for (int i=0;i<this.dimension()*this.dimension();i++){
+            if (((Board) y).board[i]!=this.board[i]){
+                return false;
+            }
         }
         return true;
         
@@ -151,7 +154,7 @@ public class Board {
         s.append(n + "\n");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                s.append(String.format("%2c ", board[n*i+j]));
+                s.append(String.format("%2d ", (int)board[n*i+j]));
             }
             s.append("\n");
         }
