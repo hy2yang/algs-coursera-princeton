@@ -51,8 +51,8 @@ public class PointSET {
     
     public Point2D nearest(Point2D p){
         if (points.isEmpty()) return null;
-        this.contains(p);
-        Point2D n= p;
+        Point2D  n = p;
+        if (points.contains(p)) return n;
         for (Point2D i:points){
             if (i.equals(p)) continue;
             if (n.equals(p)) n=i; 
@@ -63,7 +63,6 @@ public class PointSET {
     }
     
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
 
     }
 
