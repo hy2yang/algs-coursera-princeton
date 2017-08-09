@@ -17,3 +17,12 @@
 /Board.class
 /Solver.class
 /Solver$Node.class
+/KdTree$Node.class
+/KdTree.class
+/KdTreeVisualizer.class
+/PointSET.class
+/KdTree$Direction$1.class
+/KdTree$Direction$2.class
+/KdTree$Direction.class
+/RangeSearchVisualizer.class
+/NearestNeighborVisualizer.class

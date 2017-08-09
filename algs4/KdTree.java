@@ -136,27 +136,28 @@ public class KdTree {
     }
     
     public Point2D nearest(Point2D p){
+        checkinput(p);
+        if (treesize==0) return null;
         return neighbor(root, p, root.p, true);
     }
     
     private Point2D neighbor(Node x, Point2D q, Point2D n, boolean vertical){        
         if (x!=null && x.rect.distanceSquaredTo(q)<n.distanceSquaredTo(q)){
-            if (x.p.distanceSquaredTo(q)<=n.distanceSquaredTo(q)){
+            if (x.p.distanceSquaredTo(q)<n.distanceSquaredTo(q)){
                 n=x.p;
-                return n;
             }
             int cmp=0;
             
             if (vertical) cmp=Point2D.X_ORDER.compare(q, x.p);        
             else          cmp=Point2D.Y_ORDER.compare(q, x.p);
             
-            if (cmp>0){
-                n=neighbor(x.rt, q, n, !vertical);
+            if (cmp<0){
                 n=neighbor(x.lb, q, n, !vertical);
+                n=neighbor(x.rt, q, n, !vertical);
             }
-            else if (cmp<0){
-                n=neighbor(x.lb, q, n, !vertical);
+            else if (cmp>=0) {
                 n=neighbor(x.rt, q, n, !vertical);
+                n=neighbor(x.lb, q, n, !vertical);
             }
         }
         return n;
@@ -166,5 +167,3 @@ public class KdTree {
     }
 
 } 
-
-
